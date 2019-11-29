@@ -1,0 +1,66 @@
+version: '3.3'
+
+services: 
+  elasticsearch:
+    container_name: elasticsearch
+    build: 
+      context: ./elasticsearch
+      args: 
+       - ELK_VERSION=7.2.0
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - elasticsearchData:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks: 
+      - efks
+
+  kibana:
+    container_name: kibana
+    build:
+      context: ./kibana
+      args: 
+        - ELK_VERSION=7.2.0
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    networks: 
+      - efks
+
+  fluentbit:
+    container_name: fluentbit
+    build: ./fluentbit
+    volumes:
+      - ./fluentbit/config:/fluent-bit/etc
+    ports:
+      - "24224:24224"
+    depends_on:
+      - elasticsearch
+    networks: 
+      - efks
+
+  serilog:
+    container_name: serilog
+    build: 
+      context: ./serilogapp/serilogapp
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentbit
+    ports:
+      - "80:80"
+    networks: 
+      - efks
+    depends_on:
+      - fluentbit
+
+volumes:
+  elasticsearchData:
+    driver: local
+
+networks: 
+  efks:
