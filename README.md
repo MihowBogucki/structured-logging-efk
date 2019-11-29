@@ -12,10 +12,10 @@ Open you project in VS code
 Run the command `docker-compose up` up to run containers
 
 #### View Serilog app
-[Serilog](http://localhost:80/)
+[http://localhost:80/]
 
 #### View Kibana logs
-[Kibana](http://localhost:5601/)
+[http://localhost:5601/]
 
 ### Step 3.
 Run command `docker-compose down` to turn off running containers

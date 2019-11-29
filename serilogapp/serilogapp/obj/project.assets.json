@@ -6131,11 +6131,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Personal Projects\\structured-logging-efk\\serilogapp\\serilogapp\\serilogapp.csproj",
+      "projectUniqueName": "C:\\Users\\mbogucki\\OneDrive - automotiveMastermind\\Documents\\Mihow\\GitHub\\structured-logging-efk\\serilogapp\\serilogapp\\serilogapp.csproj",
       "projectName": "serilogapp",
-      "projectPath": "C:\\Personal Projects\\structured-logging-efk\\serilogapp\\serilogapp\\serilogapp.csproj",
+      "projectPath": "C:\\Users\\mbogucki\\OneDrive - automotiveMastermind\\Documents\\Mihow\\GitHub\\structured-logging-efk\\serilogapp\\serilogapp\\serilogapp.csproj",
       "packagesPath": "C:\\Users\\mbogucki\\.nuget\\packages\\",
-      "outputPath": "C:\\Personal Projects\\structured-logging-efk\\serilogapp\\serilogapp\\obj\\",
+      "outputPath": "C:\\Users\\mbogucki\\OneDrive - automotiveMastermind\\Documents\\Mihow\\GitHub\\structured-logging-efk\\serilogapp\\serilogapp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
