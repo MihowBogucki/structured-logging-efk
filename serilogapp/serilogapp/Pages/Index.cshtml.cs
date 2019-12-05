@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace serilogapp.Pages
 {
+    using Serilog;
+    using serilogapp.Dtos;
+    using serilogapp.Enums;
+
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -21,25 +21,66 @@ namespace serilogapp.Pages
         {
             _logger.LogInformation("You requested the Index page.");
 
+            GenerateRandomLogs();
+
+        }
+        public void GenerateRandomLogs()
+        {
+            Log.Information(("You requested the Index page."));
+
+            Random random = new Random();
+            var maxLogCount = random.Next(1, 1000);
+            var logCountErrorNumber = random.Next(1, maxLogCount);
+
             try
             {
-                for (int i = 0; i < 100; i++)
+                for (int i = 0; i < maxLogCount; i++)
                 {
-                    if (i == 56)
+                    if (i == logCountErrorNumber)
                     {
-                        throw new Exception("This is a demo exception.");
+                        GenerateErrorLogs();
                     }
                     else
                     {
-                        _logger.LogInformation("The value of i is {LoopCountValue}", i);
+                        Log.Information("The value of i is {LoopCountValue}", i);
                     }
 
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "We caught this exception in the Index Get Call.");
+                Log.Error(ex, "We caught this exception in the Index Get Call.");
             }
+        }
+
+        public void GenerateErrorLogs()
+        {
+            var random = new Random();
+            var numberOfErrors = random.Next(1, 10);
+
+            for (int i = 0; i < numberOfErrors; i++)
+            {
+                var randomBrand = GetRandomBrand();
+
+                var structuredIncentivesLog = new IncentivesError
+                {
+                    BrandName = randomBrand,
+                    IncentiveId = Guid.NewGuid(),
+                    DateTime = DateTime.UtcNow,
+                    App = "Incentives"
+
+                };
+
+                Log.Error("Generated Error log. {@structuredLog}", structuredIncentivesLog);
+            }
+        }
+
+        private static Brand GetRandomBrand()
+        {
+            var values = Enum.GetValues(typeof(Brand));
+            var random = new Random();
+            var randomBrand = (Brand)values.GetValue(random.Next(values.Length));
+            return randomBrand;
         }
     }
 }

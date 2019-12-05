@@ -44,7 +44,7 @@ services:
       - efks
 
   serilog:
-    container_name: serilog
+    container_name: serilogapp
     build: 
       context: ./serilogapp/serilogapp
     logging:

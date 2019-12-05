@@ -1,27 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
 namespace serilogapp
 {
+    using System;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
     using Serilog;
+    using Serilog.Events;
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+            //var configuration = new ConfigurationBuilder()
+            //    .AddJsonFile("appsettings.json")
+            //    .Build();
 
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+            //Log.Logger = new LoggerConfiguration()
+            //    .ReadFrom.Configuration(configuration)
+            //    .Enrich.FromLogContext()
+            //    .WriteTo.Console(new ElasticsearchJsonFormatter(renderMessage: false))
+            //    .CreateLogger();
 
             try
             {
@@ -38,9 +35,13 @@ namespace serilogapp
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog()
+                .UseSerilog((ctx, config) => config
+                    .MinimumLevel.Debug()
+                    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+                    .Enrich.FromLogContext()
+                    .WriteToConsole(ctx.HostingEnvironment.IsDevelopment()))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
