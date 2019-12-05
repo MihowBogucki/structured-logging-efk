@@ -20,4 +20,4 @@ Run the command `docker-compose up` up to run containers
 ### Step 3.
 Run command `docker-compose down` to turn off running containers
 
-*If any changes are made to the pproject then run `docker-compose up`*
+*If any changes are made to the project then run `docker-compose up --build`*
