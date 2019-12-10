@@ -4,7 +4,6 @@ namespace serilogapp
 {
     using Serilog;
     using Serilog.Formatting.Elasticsearch;
-    using Serilog.Sinks.SystemConsole.Themes;
 
     public static class LoggerConfigurationExtensions
     {

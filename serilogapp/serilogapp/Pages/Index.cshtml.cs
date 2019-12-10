@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace serilogapp.Pages
 {
@@ -10,23 +9,22 @@ namespace serilogapp.Pages
 
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
-
         public void OnGet()
         {
-            _logger.LogInformation("You requested the Index page.");
+            Log.Information("You requested the Index page.");
 
             GenerateRandomLogs();
 
         }
         public void GenerateRandomLogs()
         {
-            Log.Information(("You requested the Index page."));
+            this.logger.Information(("You requested the Index page."));
 
             Random random = new Random();
             var maxLogCount = random.Next(1, 1000);
@@ -42,14 +40,14 @@ namespace serilogapp.Pages
                     }
                     else
                     {
-                        Log.Information("The value of i is {LoopCountValue}", i);
+                        this.logger.Information("The value of i is {LoopCountValue}", i);
                     }
 
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "We caught this exception in the Index Get Call.");
+                this.logger.Error(ex, "We caught this exception in the Index Get Call.");
             }
         }
 
@@ -71,7 +69,7 @@ namespace serilogapp.Pages
 
                 };
 
-                Log.Error("Generated Error log. {@structuredLog}", structuredIncentivesLog);
+                this.logger.Error("Generated Error log. {@structuredLog}", structuredIncentivesLog);
             }
         }
 

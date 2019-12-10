@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace serilogapp.Controller
 {
     using Microsoft.Extensions.Logging;
-    using serilogapp.Dtos;
-    using serilogapp.Enums;
     using serilogapp.Pages;
     using Controller = Microsoft.AspNetCore.Mvc.Controller;
 

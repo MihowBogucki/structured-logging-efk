@@ -1,6 +1,6 @@
 namespace serilogapp
 {
-    using System;
+    using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;
     using Serilog;
@@ -8,43 +8,17 @@ namespace serilogapp
 
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            //var configuration = new ConfigurationBuilder()
-            //    .AddJsonFile("appsettings.json")
-            //    .Build();
+        public static void Main(string[] args) => BuildWebHost(args).Run();
 
-            //Log.Logger = new LoggerConfiguration()
-            //    .ReadFrom.Configuration(configuration)
-            //    .Enrich.FromLogContext()
-            //    .WriteTo.Console(new ElasticsearchJsonFormatter(renderMessage: false))
-            //    .CreateLogger();
-
-            try
-            {
-                Log.Information("Application Starting Up");
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception e)
-            {
-                Log.Fatal(e, "The application failed to start correctly.");
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
-        }
-
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        private static IWebHost BuildWebHost(string[] args)
+            => WebHost.CreateDefaultBuilder(args)
+                .UseKestrel()
                 .UseSerilog((ctx, config) => config
                     .MinimumLevel.Debug()
                     .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
                     .Enrich.FromLogContext()
                     .WriteToConsole(ctx.HostingEnvironment.IsDevelopment()))
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .UseStartup<Startup>()
+                .Build();
     }
 }
