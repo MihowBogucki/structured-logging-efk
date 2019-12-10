@@ -11,6 +11,8 @@ namespace serilogapp.Pages
     {
         private readonly ILogger logger;
 
+        public string Message { get; set; }
+
         public IndexModel(ILogger logger)
         {
             this.logger = logger;
@@ -19,10 +21,24 @@ namespace serilogapp.Pages
         {
             Log.Information("You requested the Index page.");
 
+            Message = "Welcome";
+
+        }
+        public void OnPostLogs()
+        {
+            Message = "Random logs generated.";
             GenerateRandomLogs();
 
         }
-        public void GenerateRandomLogs()
+
+        public void OnPostGenerateErrors()
+        {
+            Message = "Error logs generated.";
+            GenerateErrorLogs();
+        }
+
+
+        private void GenerateRandomLogs()
         {
             this.logger.Information(("You requested the Index page."));
 
@@ -51,7 +67,7 @@ namespace serilogapp.Pages
             }
         }
 
-        public void GenerateErrorLogs()
+        private void GenerateErrorLogs()
         {
             var random = new Random();
             var numberOfErrors = random.Next(1, 10);
