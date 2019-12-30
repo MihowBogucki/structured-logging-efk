@@ -11,24 +11,37 @@
         <p>Click on one of the buttons to generate logs</p>
     </div>
 
-    <div class="row">
-        <div class="col-lg-6 text-right">
-            <label>Click to generate random logs</label>
+    <div class="row" style="margin-bottom: 50px">
+        <div class="col-12" style="margin-bottom: 5px">
+            <h4 class="display-4 text-center">Chrome Incentives Ingest</h4>
         </div>
-        <div class="col-lg-6">
-            <form class="text-left" asp-page-handler="Logs" method="post">
-                <button class="btn btn-info">Generate Logs</button>
+        <div class="col-12">
+            <form class="text-center" asp-page-handler="ChromeIngestLogs" method="post">
+                <button class="btn btn-info">Generate Chrome Ingest Logs</button>
             </form>
             <p></p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-6 text-right">
-            <label>Click to generate error logs</label>
+    
+    <div class="row" style="margin-bottom: 50px">
+        <div class="col-12" style="margin-bottom: 5px">
+            <h4 class="display-4 text-center">Incentives</h4>
         </div>
-        <div class="col-6 ">
-            <form class="text-left" asp-page-handler="GenerateErrors" method="post">
-                <button class="btn btn-danger">Generate Errors</button>
+        <div class="col-4">
+            <form class="text-center" asp-page-handler="Logs" method="post">
+                <button class="btn btn-info">Generate Processing Logs</button>
+            </form>
+            <p></p>
+        </div>
+        <div class="col-4 ">
+            <form class="text-center" asp-page-handler="GenerateErrors" method="post">
+                <button class="btn btn-danger">Generate Errors Logs</button>
+            </form>
+            <p></p>
+        </div>
+        <div class="col-4 ">
+            <form class="text-center" asp-page-handler="GenerateApiErrors" method="post">
+                <button class="btn btn-danger">Simulate API Failure</button>
             </form>
             <p></p>
         </div>
